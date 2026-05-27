@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(DerivedData/**)",
+      "Read(.build/**)",
+      "Read(**/.build/**)",
+      "Read(**/xcuserdata/**)",
+      "Read(**/*.xcuserdata/**)",
+      "Read(**/Pods/**)",
+      "Read(**/*.xccurrentversion)")
+    ]
+  }
+}
