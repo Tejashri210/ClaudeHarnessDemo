@@ -1,0 +1,37 @@
+name: FeedFeature
+options:
+  bundleIdPrefix: com.tejashri.feedfeature
+
+targets:
+  FeedFeature:
+    type: framework
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: FeedFeature
+    settings:
+      GENERATE_INFOPLIST_FILE: YES
+
+  FeedFeatureTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: FeedFeatureTests
+      - path: TestHelpers
+    dependencies:
+      - target: FeedFeature
+    settings:
+      GENERATE_INFOPLIST_FILE: YES
+
+schemes:
+  FeedFeature:
+    build:
+      targets:
+        FeedFeature: all
+    test:
+      targets:
+        - FeedFeatureTests
+      gatherCoverageData: true
+      coveredTargets:
+        - FeedFeature

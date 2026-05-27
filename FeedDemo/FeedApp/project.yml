@@ -1,0 +1,31 @@
+name: FeedApp
+options:
+  bundleIdPrefix: com.tejashri.feedapp
+projectReferences:
+  FeedFeature:
+    path: ../FeedFeature/FeedFeature.xcodeproj
+  FeedNetwork:
+    path: ../FeedNetwork/FeedNetwork.xcodeproj
+  FeedUI:
+    path: ../FeedUI/FeedUI.xcodeproj
+targets:
+  FeedApp:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: FeedApp
+    dependencies:
+      - target: FeedFeature/FeedFeature
+      - target: FeedNetwork/FeedNetwork
+      - target: FeedUI/FeedUI
+    settings:
+      GENERATE_INFOPLIST_FILE: YES
+      INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
+      INFOPLIST_KEY_UILaunchScreen_Generation: YES
+      INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+schemes:
+  FeedApp:
+    build:
+      targets:
+        FeedApp: all

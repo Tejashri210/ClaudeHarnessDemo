@@ -1,0 +1,5 @@
+#!/bin/bash
+# Install dependencies if needed
+npm install
+# Start server in background
+nohup npm start > server.log 2>&1 &

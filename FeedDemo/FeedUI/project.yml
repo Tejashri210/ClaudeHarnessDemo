@@ -1,0 +1,39 @@
+name: FeedUI
+options:
+  bundleIdPrefix: com.tejashri.feedui
+projectReferences:
+  FeedFeature:
+    path: ../FeedFeature/FeedFeature.xcodeproj
+targets:
+  FeedUI:
+    type: framework
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: FeedUI
+    dependencies:
+      - target: FeedFeature/FeedFeature
+    settings:
+      GENERATE_INFOPLIST_FILE: YES
+  FeedUITests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: FeedUITests
+      - path: TestHelpers
+    dependencies:
+      - target: FeedUI
+    settings:
+      GENERATE_INFOPLIST_FILE: YES
+schemes:
+  FeedUI:
+    build:
+      targets:
+        FeedUI: all
+    test:
+      targets:
+        - FeedUITests
+      gatherCoverageData: true
+      coveredTargets:
+        - FeedUI

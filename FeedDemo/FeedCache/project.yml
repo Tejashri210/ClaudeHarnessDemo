@@ -1,0 +1,34 @@
+name: FeedCache
+options:
+  bundleIdPrefix: com.tejashri.feedcache
+targets:
+  FeedCache:
+    type: framework
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: FeedCache
+    settings:
+      GENERATE_INFOPLIST_FILE: YES
+  FeedCacheTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: FeedCacheTests
+      - path: TestHelpers
+    dependencies:
+      - target: FeedCache
+    settings:
+      GENERATE_INFOPLIST_FILE: YES
+schemes:
+  FeedCache:
+    build:
+      targets:
+        FeedCache: all
+    test:
+      targets:
+        - FeedCacheTests
+      gatherCoverageData: true
+      coveredTargets:
+        - FeedCache

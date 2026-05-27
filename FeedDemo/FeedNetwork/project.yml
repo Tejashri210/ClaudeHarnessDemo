@@ -1,0 +1,59 @@
+name: FeedNetwork
+options:
+  bundleIdPrefix: com.tejashri.feednetwork
+
+packages:
+  Moya:
+    url: https://github.com/Moya/Moya.git
+    from: 15.0.3
+  Alamofire:
+    url: https://github.com/Alamofire/Alamofire.git
+    from: 5.9.0
+
+projectReferences:
+  FeedFeature:
+    path: ../FeedFeature/FeedFeature.xcodeproj
+
+targets:
+  FeedNetwork:
+    type: framework
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: FeedNetwork
+    dependencies:
+      - target: FeedFeature/FeedFeature
+      - package: Moya
+        product: Moya
+      - package: Alamofire
+        product: Alamofire
+    settings:
+      GENERATE_INFOPLIST_FILE: YES
+
+  FeedNetworkTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: FeedNetworkTests
+      - path: TestHelpers
+    dependencies:
+      - target: FeedNetwork
+      - package: Moya
+        product: Moya
+      - package: Alamofire
+        product: Alamofire
+    settings:
+      GENERATE_INFOPLIST_FILE: YES
+
+schemes:
+  FeedNetwork:
+    build:
+      targets:
+        FeedNetwork: all
+    test:
+      targets:
+        - FeedNetworkTests
+      gatherCoverageData: true
+      coveredTargets:
+        - FeedNetwork

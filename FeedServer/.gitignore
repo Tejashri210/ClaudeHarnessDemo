@@ -1,0 +1,6 @@
+# Ignore server log and output files
+nohup.out
+server.log
+
+.DS_Store
+node_modules/*
