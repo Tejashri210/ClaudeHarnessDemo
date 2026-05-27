@@ -83,4 +83,24 @@ public final class CoreDataFeedStore: FeedStore {
             }
         }
     }
+
+    public func deleteCachedFeedImagesOlderThan7Days(completion: @escaping DeletionCompletion) {
+        perform { context in
+            do {
+                let sevenDaysAgo = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
+
+                let fetchRequest = NSFetchRequest<Cache>(entityName: "Cache")
+                fetchRequest.predicate = NSPredicate(format: "timestamp < %@", sevenDaysAgo as NSDate)
+
+                let oldCaches = try context.fetch(fetchRequest)
+                oldCaches.forEach { context.delete($0) }
+
+                try context.save()
+                completion(nil)
+            } catch {
+                context.rollback()
+                completion(error)
+            }
+        }
+    }
 }
