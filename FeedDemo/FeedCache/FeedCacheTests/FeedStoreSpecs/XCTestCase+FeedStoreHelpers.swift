@@ -42,18 +42,6 @@ extension XCTestCase {
         return deletionError
     }
 
-    @discardableResult
-    func deleteOldCachedImages(from sut: CoreDataFeedStore) -> Error? {
-        let exp = expectation(description: "Wait for old cache deletion")
-        var deletionError: Error?
-        sut.deleteCachedFeedImagesOlderThan7Days { receivedDeletionError in
-            deletionError = receivedDeletionError
-            exp.fulfill()
-        }
-        wait(for: [exp], timeout: 1.0)
-        return deletionError
-    }
-
     func expect(_ sut: FeedStore, toRetrieveTwice expectedResult: RetrieveCachedFeedResult, file: StaticString = #filePath, line: UInt = #line) {
         expect(sut, toRetrieve: expectedResult, file: file, line: line)
         expect(sut, toRetrieve: expectedResult, file: file, line: line)
