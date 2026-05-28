@@ -1,4 +1,5 @@
 # FeedNetwork — Agent Instructions
+Before touching any code in this module, read this entire file.
 
 ## This module is the networking layer
 Depends on FeedFeature protocols only.
@@ -23,5 +24,8 @@ XCTest — scheme: FeedNetwork
 
 ## Verify your work
 ```bash
-xcodebuild test -project FeedNetwork.xcodeproj -scheme FeedNetwork -destination 'platform=iOS Simulator,name=iPhone 16'
+xcodebuild test -project FeedNetwork.xcodeproj -scheme FeedNetwork -destination 'platform=iOS Simulator,name=iPhone 17'
 ```
+<!--- OR
+Run tests using the FeedNetwork scheme defined in project.yml
+Verifying everytime seems overkill. We will evaluate this when we add evaluator-rubric in next lectures --->

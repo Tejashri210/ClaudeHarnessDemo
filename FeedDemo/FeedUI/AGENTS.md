@@ -1,4 +1,5 @@
 # FeedUI — Agent Instructions
+Before touching any code in this module, read this entire file.
 
 ## This module is the presentation layer
 Depends on FeedFeature protocols only.
@@ -29,5 +30,8 @@ XCTest — scheme: FeedUI
 
 ## Verify your work
 ```bash
-xcodebuild test -project FeedUI.xcodeproj -scheme FeedUI -destination 'platform=iOS Simulator,name=iPhone 16'
+xcodebuild test -project FeedUI.xcodeproj -scheme FeedUI -destination 'platform=iOS Simulator,name=iPhone 17'
 ```
+<!--- OR
+Run tests using the FeedUI scheme defined in project.yml
+Verifying everytime seems overkill. We will evaluate this when we add evaluator-rubric in next lectures --->

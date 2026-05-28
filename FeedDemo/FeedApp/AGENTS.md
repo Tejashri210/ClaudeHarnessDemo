@@ -1,4 +1,5 @@
 # FeedApp — Agent Instructions
+Before touching any code in this module, read this entire file.
 
 ## This is the composition root only
 Zero business logic here — ever.
@@ -25,5 +26,8 @@ FeedViewController → UINavigationController → UIWindow
 
 ## Build
 ```bash
-xcodebuild build -project FeedApp.xcodeproj -scheme FeedApp -destination 'platform=iOS Simulator,name=iPhone 16'
+xcodebuild build -project FeedApp.xcodeproj -scheme FeedApp -destination 'platform=iOS Simulator,name=iPhone 17'
 ```
+<!--- OR
+Run tests using the FeedApp scheme defined in project.yml
+Verifying everytime seems overkill. We will evaluate this when we add evaluator-rubric in next lectures --->

@@ -32,11 +32,12 @@ For cross-module work:
 ./generate_all.sh
 
 # Build app
-xcodebuild build -project FeedApp.xcodeproj -scheme FeedApp -destination 'platform=iOS Simulator,name=iPhone 16'
+xcodebuild build -project FeedApp.xcodeproj -scheme FeedApp -destination 'platform=iOS Simulator,name=iPhone 17'
 ```
 
 ## Session rules
-1. Read claude-progress.md — understand current state before anything else
+1. Read claude-progress.md — understand current state before anything else (WIP)
 2. Read ARCHITECTURE.md — understand module boundaries
 3. Run tests before and after changes
 4. Update claude-progress.md and session-handoff.md before ending session (WIP)
+5. Before starting any task, read the relevant module AGENTS.md first

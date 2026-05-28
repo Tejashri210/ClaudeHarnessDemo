@@ -1,4 +1,5 @@
 # FeedCache — Agent Instructions
+Before touching any code in this module, read this entire file.
 
 ## THIS MODULE IS FULLY STANDALONE
 No FeedFeature import. No FeedNetwork import. No UIKit.
@@ -29,5 +30,8 @@ XCTest — two targets:
 
 ## Verify your work
 ```bash
-xcodebuild test -project FeedCache.xcodeproj -scheme FeedCache -destination 'platform=iOS Simulator,name=iPhone 16'
+xcodebuild test -project FeedCache.xcodeproj -scheme FeedCache -destination 'platform=iOS Simulator,name=iPhone 17'
 ```
+<!--- OR
+Run tests using the FeedCache scheme defined in project.yml
+Verifying everytime seems overkill. We will evaluate this when we add evaluator-rubric in next lectures --->

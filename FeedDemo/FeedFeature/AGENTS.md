@@ -1,4 +1,5 @@
 # FeedFeature — Agent Instructions
+Before touching any code in this module, read this entire file.
 
 ## This module is the domain layer
 Zero external dependencies. No import except Foundation.
@@ -20,5 +21,8 @@ Swift Testing (not XCTest)
 
 ## Verify your work
 ```bash
-xcodebuild test -project FeedFeature.xcodeproj -scheme FeedFeature -destination 'platform=iOS Simulator,name=iPhone 16'
+xcodebuild test -project FeedFeature.xcodeproj -scheme FeedFeature -destination 'platform=iOS Simulator,name=iPhone 17'
 ```
+<!--- OR
+Run tests using the FeedFeature scheme defined in project.yml
+Verifying everytime seems overkill. We will evaluate this when we add evaluator-rubric in next lectures --->
