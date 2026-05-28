@@ -1,3 +1,28 @@
+## prompt:
+Add a method in CoredataFeedStore that deletes all cached feed images older than 7 days
+
+## Conclusion:
+
+## What went well:
+ - Change in the correct file.
+ - Followed the existing error handling pattern
+ - Used the CoreData relationship correctly
+
+## What can be better:
+ 1. **no verification** No test cases. No excecution of text target. xcodebuild test -scheme FeedCache.
+
+ 2. **wrong method signature**. hardcoded value '7 days' in the method name.
+
+ 3. **architectural decision**. didn't check FeedStore protocol
+ 
+ 4. **typo search wasted tokens**. "CoredataFeedStore" instead of "CoreDataFeedStore". Can we avoid such small things with AGENT.md 
+
+ 5. **tokens used** : 7k
+
+ 6. Small project, small delta. When scope changes with large legacy codebase, third party dependancies, no clear module boundries; the delta may increase.
+
+##  CLI output dump:
+
 ## Usage before prompt:
 claude-sonnet-4-20250514 • 15k/200k tokens (7%)
 ⛁ System prompt: 3.2k tokens (1.6%)
@@ -5,15 +30,6 @@ claude-sonnet-4-20250514 • 15k/200k tokens (7%)
 ⛁ Messages: 8 tokens (0.0%)
 ⛶ Free space: 185.4k (92.7%)
 
-## usage after prompt:
-claude-sonnet-4-20250514 • 22k/200k tokens (11%)
-⛁ System prompt: 3.2k tokens (1.6%)
-⛁ System tools: 11.5k tokens (5.7%)
-⛁ Messages: 7.4k tokens (3.7%)
-⛶ Free space: 178.0k (89.0%)
-
-## prompt:
-Add a method in CoredataFeedStore that deletes all cached feed images older than 7 days
 
 ## CLI output:
 I'll help you add a method to delete cached feed images older than 7 days in
@@ -103,22 +119,9 @@ I'll help you add a method to delete cached feed images older than 7 days in
   - Follows the same error handling pattern as other methods in the class
 
 
-## Conclusion:
-
-## What went well:
- - Change in the correct file.
- - Followed the existing error handling pattern
- - Used the CoreData relationship correctly
-
-## What can be better:
- 1. **no verification** No test cases. No excecution of text target. xcodebuild test -scheme FeedCache.
-
- 2. **wrong method signature**. hardcoded value '7 days' in the method name.
-
- 3. **architectural decision**. didn't check FeedStore protocol
- 
- 4. **typo search wasted tokens**. "CoredataFeedStore" instead of "CoreDataFeedStore". Can we avoid such small things with AGENT.md 
-
- 5. **tokens used** : 7k
-
- 6. Small project, small delta. When scope changes with large legacy codebase, third party dependancies, no clear module boundries; the delta may increase.
+## usage after prompt:
+claude-sonnet-4-20250514 • 22k/200k tokens (11%)
+⛁ System prompt: 3.2k tokens (1.6%)
+⛁ System tools: 11.5k tokens (5.7%)
+⛁ Messages: 7.4k tokens (3.7%)
+⛶ Free space: 178.0k (89.0%)

@@ -58,6 +58,24 @@ class FeedStoreIntegrationTests: XCTestCase {
         expect(storeToLoad, toRetrieve: .empty)
     }
 
+    func test_deleteOldCachedImages_deletesImagesOlderThan7Days() throws {
+        let storeToInsert = try makeSUT()
+        let storeToDelete = try makeSUT()
+        let storeToLoad = try makeSUT()
+
+        let eightDaysAgo = Calendar.current.date(byAdding: .day, value: -8, to: Date())!
+        let sixDaysAgo = Calendar.current.date(byAdding: .day, value: -6, to: Date())!
+        let oldFeed = uniqueImageFeed()
+        let recentFeed = uniqueImageFeed()
+
+        insert((oldFeed, eightDaysAgo), to: storeToInsert)
+        insert((recentFeed, sixDaysAgo), to: storeToInsert)
+
+        deleteOldCachedImages(from: storeToDelete as! CoreDataFeedStore)
+
+        expect(storeToLoad, toRetrieve: .found(feed: recentFeed, timestamp: sixDaysAgo))
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) throws -> FeedStore {
