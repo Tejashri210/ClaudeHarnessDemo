@@ -27,3 +27,5 @@ Select `FeedApp` scheme in Xcode and run.
 
 ### FeedDemo/Docs
 Findings and notes from the harness experiment.
+
+<img width="423" height="872" alt="Screenshot 2026-05-28 at 12 35 17 PM" src="https://github.com/user-attachments/assets/5b2d3b10-5aea-401b-a83c-4c9a78405500" />
