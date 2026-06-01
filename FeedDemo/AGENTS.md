@@ -35,9 +35,12 @@ For cross-module work:
 xcodebuild build -project FeedApp.xcodeproj -scheme FeedApp -destination 'platform=iOS Simulator,name=iPhone 17'
 ```
 
-## Session rules
-1. Read claude-progress.md — understand current state before anything else (WIP)
-2. Read ARCHITECTURE.md — understand module boundaries
-3. Run tests before and after changes
-4. Update claude-progress.md and session-handoff.md before ending session (WIP)
-5. Before starting any task, read the relevant module AGENTS.md first
+## Cross-module session rules
+Only relevant when working across multiple modules simultaneously:
+1. Read ARCHITECTURE.md — understand module boundaries
+2. Read each affected module's AGENTS.md before touching its code
+3. Read each affected module's claude-progress.md — understand current state
+4. Update each affected module's claude-progress.md and session-handoff.md before ending session
+
+<!-- TODO Lecture 06: module progress sync to root will be automated via stop hook -->
+<!-- Goal: closed loop agent that aggregates module status at workspace level -->
