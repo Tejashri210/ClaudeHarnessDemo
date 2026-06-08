@@ -42,5 +42,10 @@ Only relevant when working across multiple modules simultaneously:
 3. Read each affected module's claude-progress.md — understand current state
 4. Update each affected module's claude-progress.md and session-handoff.md before ending session
 
+## Clock-out rule
+Before ending any session, update:
+- claude-progress.md — test counts
+- session-handoff.md — what was done, decisions made, next action
+
 <!-- TODO Lecture 06: module progress sync to root will be automated via stop hook -->
 <!-- Goal: closed loop agent that aggregates module status at workspace level -->

@@ -35,7 +35,7 @@ public final class CoreDataFeedStore: FeedStore {
         }
     }
 
-    private func perform(_ action: @escaping (NSManagedObjectContext) -> Void) {
+    func perform(_ action: @escaping (NSManagedObjectContext) -> Void) {
         let context = self.context
         context.perform { action(context) }
     }
@@ -82,5 +82,36 @@ public final class CoreDataFeedStore: FeedStore {
                 completion(error)
             }
         }
+    }
+
+    public func deleteCachedFeedImagesOlderThan(days: Int, completion: @escaping DeletionCompletion) {
+        perform { context in
+            do {
+                let cutoffDate = Calendar.current.date(byAdding: .day, value: -days, to: Date()) ?? Date()
+
+                let fetchRequest = NSFetchRequest<FeedImage>(entityName: "FeedImage")
+                fetchRequest.predicate = NSPredicate(format: "data != nil AND cachedAt < %@", cutoffDate as NSDate)
+
+                let imagesToCleanup = try context.fetch(fetchRequest)
+
+                for image in imagesToCleanup {
+                    image.data = nil
+                    image.cachedAt = nil
+                }
+
+                if !imagesToCleanup.isEmpty {
+                    try context.save()
+                }
+
+                completion(nil)
+            } catch {
+                context.rollback()
+                completion(error)
+            }
+        }
+    }
+
+    public func deleteCachedFeedImagesOlderThanSevenDays(completion: @escaping DeletionCompletion) {
+        deleteCachedFeedImagesOlderThan(days: 7, completion: completion)
     }
 }

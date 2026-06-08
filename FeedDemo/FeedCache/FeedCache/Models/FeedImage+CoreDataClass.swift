@@ -7,6 +7,8 @@ class FeedImage: NSManagedObject {
     @NSManaged var imageDescription: String?
     @NSManaged var location: String?
     @NSManaged var url: URL
+    @NSManaged var data: Data?
+    @NSManaged var cachedAt: Date?
     @NSManaged var cache: Cache
 
     static func images(from feed: [LocalFeedImage],

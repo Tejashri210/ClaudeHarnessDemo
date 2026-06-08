@@ -37,5 +37,9 @@ Verifying everytime seems overkill. We will evaluate this when we add evaluator-
    - What's next
 3. Commit both files before closing Claude Code
 
+## Clock-out rule
+Before ending any session, update:
+- claude-progress.md — test counts
+- session-handoff.md — what was done, decisions made, next action
 <!-- TODO Lecture 06: replace this manual step with a stop hook -->
 <!-- Goal: closed loop agent that auto-updates progress and syncs to root -->

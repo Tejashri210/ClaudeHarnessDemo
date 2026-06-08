@@ -159,6 +159,53 @@ class FeedStoreTests: XCTestCase, FailableFeedStoreSpecs {
 
         assertThatSideEffectsRunSerially(on: sut)
     }
+
+    func test_deleteCachedFeedImagesOlderThanSevenDays_deliversNoErrorOnEmptyCache() throws {
+        let sut = try makeSUT()
+
+        let deletionError = deleteCachedImagesOlderThanSevenDays(from: sut)
+
+        XCTAssertNil(deletionError, "Expected successful deletion on empty cache")
+    }
+
+    func test_deleteCachedFeedImagesOlderThanSevenDays_hasNoSideEffectsOnEmptyCache() throws {
+        let sut = try makeSUT()
+
+        deleteCachedImagesOlderThanSevenDays(from: sut)
+
+        expect(sut, toRetrieve: .empty)
+    }
+
+    func test_deleteCachedFeedImagesOlderThanSevenDays_deliversNoErrorOnNonEmptyCache() throws {
+        let sut = try makeSUT()
+        let feed = uniqueImageFeed()
+        let timestamp = Date()
+
+        insert((feed, timestamp), to: sut)
+
+        let deletionError = deleteCachedImagesOlderThanSevenDays(from: sut)
+
+        XCTAssertNil(deletionError, "Expected successful deletion on non-empty cache")
+    }
+
+    func test_deleteCachedFeedImagesOlderThanSevenDays_removesCachedImageDataOlderThanSevenDays() throws {
+        let sut = try makeSUT()
+        let feed = uniqueImageFeed()
+        let timestamp = Date()
+        let oldImageData = "old image data".data(using: .utf8)!
+        let recentImageData = "recent image data".data(using: .utf8)!
+        let nineDaysAgo = Calendar.current.date(byAdding: .day, value: -9, to: Date())!
+        let twoDaysAgo = Calendar.current.date(byAdding: .day, value: -2, to: Date())!
+
+        insert((feed, timestamp), to: sut)
+        setCachedImageData(oldImageData, cachedAt: nineDaysAgo, for: feed[0], in: sut)
+        setCachedImageData(recentImageData, cachedAt: twoDaysAgo, for: feed[1], in: sut)
+
+        deleteCachedImagesOlderThanSevenDays(from: sut)
+
+        verifyCachedImageData(nil, for: feed[0], in: sut)
+        verifyCachedImageData(recentImageData, for: feed[1], in: sut)
+    }
     
     func test_imageEntity_properties() throws {
         let entity = try XCTUnwrap(
@@ -169,6 +216,8 @@ class FeedStoreTests: XCTestCase, FailableFeedStoreSpecs {
         entity.verify(attribute: "imageDescription", hasType: .stringAttributeType, isOptional: true)
         entity.verify(attribute: "location", hasType: .stringAttributeType, isOptional: true)
         entity.verify(attribute: "url", hasType: .URIAttributeType, isOptional: false)
+        entity.verify(attribute: "data", hasType: .binaryDataAttributeType, isOptional: true)
+        entity.verify(attribute: "cachedAt", hasType: .dateAttributeType, isOptional: true)
     }
 
     // MARK: - Helpers
@@ -182,6 +231,69 @@ class FeedStoreTests: XCTestCase, FailableFeedStoreSpecs {
     private func inMemoryStoreURL() -> URL {
         URL(fileURLWithPath: "/dev/null")
             .appendingPathComponent("\(type(of: self)).store")
+    }
+
+    private func deleteCachedImagesOlderThanSevenDays(from sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) -> Error? {
+        let exp = expectation(description: "Wait for deletion completion")
+        var deletionError: Error?
+
+        (sut as! CoreDataFeedStore).deleteCachedFeedImagesOlderThanSevenDays { error in
+            deletionError = error
+            exp.fulfill()
+        }
+
+        wait(for: [exp], timeout: 1.0)
+        return deletionError
+    }
+
+    private func setCachedImageData(_ data: Data, cachedAt: Date, for image: LocalFeedImage, in sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
+        let exp = expectation(description: "Wait for cache update")
+
+        let store = sut as! CoreDataFeedStore
+        store.perform { context in
+            let fetchRequest = NSFetchRequest<FeedImage>(entityName: "FeedImage")
+            fetchRequest.predicate = NSPredicate(format: "id == %@", image.id as CVarArg)
+
+            do {
+                let results = try context.fetch(fetchRequest)
+                if let feedImage = results.first {
+                    feedImage.data = data
+                    feedImage.cachedAt = cachedAt
+                    try context.save()
+                }
+                exp.fulfill()
+            } catch {
+                XCTFail("Failed to set cached image data: \(error)", file: file, line: line)
+                exp.fulfill()
+            }
+        }
+
+        wait(for: [exp], timeout: 1.0)
+    }
+
+    private func verifyCachedImageData(_ expectedData: Data?, for image: LocalFeedImage, in sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
+        let exp = expectation(description: "Wait for verification")
+
+        let store = sut as! CoreDataFeedStore
+        store.perform { context in
+            let fetchRequest = NSFetchRequest<FeedImage>(entityName: "FeedImage")
+            fetchRequest.predicate = NSPredicate(format: "id == %@", image.id as CVarArg)
+
+            do {
+                let results = try context.fetch(fetchRequest)
+                if let feedImage = results.first {
+                    XCTAssertEqual(feedImage.data, expectedData, "Expected cached image data to match", file: file, line: line)
+                } else {
+                    XCTFail("Could not find feed image with id \(image.id)", file: file, line: line)
+                }
+                exp.fulfill()
+            } catch {
+                XCTFail("Failed to verify cached image data: \(error)", file: file, line: line)
+                exp.fulfill()
+            }
+        }
+
+        wait(for: [exp], timeout: 1.0)
     }
 }
 
