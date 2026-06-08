@@ -159,69 +159,7 @@ class FeedStoreTests: XCTestCase, FailableFeedStoreSpecs {
 
         assertThatSideEffectsRunSerially(on: sut)
     }
-
-    func test_deleteCachedFeedImagesOlderThan_deliversNoErrorOnEmptyCache() throws {
-        let sut = try makeSUT()
-
-        let deletionError = deleteCachedFeedImagesOlderThan(days: 7, from: sut)
-
-        XCTAssertNil(deletionError, "Expected no deletion error on empty cache")
-    }
-
-    func test_deleteCachedFeedImagesOlderThan_hasNoSideEffectsOnEmptyCache() throws {
-        let sut = try makeSUT()
-
-        deleteCachedFeedImagesOlderThan(days: 7, from: sut)
-
-        expect(sut, toRetrieve: .empty)
-    }
-
-    func test_deleteCachedFeedImagesOlderThan_deletesImagesOlderThanSpecifiedDays() throws {
-        let sut = try makeSUT()
-        let feed = uniqueImageFeed()
-        let eightDaysAgo = Calendar.current.date(byAdding: .day, value: -8, to: Date())!
-        let fiveDaysAgo = Calendar.current.date(byAdding: .day, value: -5, to: Date())!
-
-        insert((feed, eightDaysAgo), to: sut)
-        insert((feed, fiveDaysAgo), to: sut)
-
-        deleteCachedFeedImagesOlderThan(days: 7, from: sut)
-
-        expect(sut, toRetrieve: .found(feed: feed, timestamp: fiveDaysAgo))
-    }
-
-    func test_deleteCachedFeedImagesOlderThan_preservesImagesNewerThanSpecifiedDays() throws {
-        let sut = try makeSUT()
-        let feed = uniqueImageFeed()
-        let threeDaysAgo = Calendar.current.date(byAdding: .day, value: -3, to: Date())!
-
-        insert((feed, threeDaysAgo), to: sut)
-
-        deleteCachedFeedImagesOlderThan(days: 7, from: sut)
-
-        expect(sut, toRetrieve: .found(feed: feed, timestamp: threeDaysAgo))
-    }
-
-    func test_deleteCachedFeedImagesOlderThanSevenDays_deliversNoErrorOnEmptyCache() throws {
-        let sut = try makeSUT()
-
-        let deletionError = deleteCachedFeedImagesOlderThanSevenDays(from: sut)
-
-        XCTAssertNil(deletionError, "Expected no deletion error on empty cache")
-    }
-
-    func test_deleteCachedFeedImagesOlderThanSevenDays_deletesImagesOlderThanSevenDays() throws {
-        let sut = try makeSUT()
-        let feed = uniqueImageFeed()
-        let eightDaysAgo = Calendar.current.date(byAdding: .day, value: -8, to: Date())!
-
-        insert((feed, eightDaysAgo), to: sut)
-
-        deleteCachedFeedImagesOlderThanSevenDays(from: sut)
-
-        expect(sut, toRetrieve: .empty)
-    }
-
+    
     func test_imageEntity_properties() throws {
         let entity = try XCTUnwrap(
             CoreDataFeedStore.model?.entitiesByName["FeedImage"]

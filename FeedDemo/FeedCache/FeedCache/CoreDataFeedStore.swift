@@ -83,28 +83,4 @@ public final class CoreDataFeedStore: FeedStore {
             }
         }
     }
-
-    public func deleteCachedFeedImagesOlderThan(days: Int, completion: @escaping DeletionCompletion) {
-        perform { context in
-            do {
-                let cutoffDate = Calendar.current.date(byAdding: .day, value: -days, to: Date()) ?? Date()
-                let cachesToDelete = try Cache.fetchCachesOlderThan(cutoffDate, in: context)
-
-                cachesToDelete.forEach { context.delete($0) }
-
-                if !cachesToDelete.isEmpty {
-                    try context.save()
-                }
-
-                completion(nil)
-            } catch {
-                context.rollback()
-                completion(error)
-            }
-        }
-    }
-
-    public func deleteCachedFeedImagesOlderThanSevenDays(completion: @escaping DeletionCompletion) {
-        deleteCachedFeedImagesOlderThan(days: 7, completion: completion)
-    }
 }
