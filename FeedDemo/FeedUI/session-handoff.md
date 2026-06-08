@@ -1,18 +1,24 @@
 ## Last session
-Date: 2026-05-28
-Work done: Added FeedUI/AGENTS.md with isolation rules and explicit self-read instruction.
+Date: 2026-06-04
+Work done: Lecture 06 complete — CLAUDE.md and init.sh added. session-handoff.md added.
+
+## Last commit
+<!-- hash + message from git log -1 -->
 
 ## Decisions made
 - FeedUIComposer is the only public composition point — all other types internal
 - WeakRefVirtualProxy rule documented — retain cycle prevention is non-negotiable
 - Internal types listed explicitly — Claude must never make them public
+- CLAUDE.md single job — run init.sh only
 
 ## Verified
-- Nothing run yet — tests not executed this session
+- CLAUDE.md added
+- init.sh added
+- session-handoff.md added
 
 ## Blockers
 - Simulator destination not confirmed
-- claude-progress.md test counts empty — needs first test run
+- Tests not yet run — counts empty
 
 ## Next session starts here
 1. Read FeedUI/AGENTS.md

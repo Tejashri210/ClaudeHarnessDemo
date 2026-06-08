@@ -1,24 +1,29 @@
 
 ## Last session
-Date: 2026-05-28
-Work done: Added full harness across all 5 modules — Lecture 04 complete.
+Date: 2026-06-04
+Work done: Lecture 06 complete — CLAUDE.md and init.sh added to root and all 5 modules. session-handoff.md added to all modules.
+
+## Last commit
+<!-- hash + message from git log -1 -->
 
 ## Decisions made
-- AGENTS.md kept lean — pointers only at root, detail in module files
-- Test counts removed from AGENTS.md — tracked in claude-progress.md per module
-- Simulator destination left as placeholder — needs verification per machine
+- CLAUDE.md kept to single job — one line: run init.sh
+- init.sh cats progress + handoff + AGENTS.md in that order
+- session-handoff.md and claude-progress.md kept separate — state vs narrative
+- evaluator-rubric.md, feature_list.json, stop.sh deferred to next lecture
 
 ## Verified
-- All AGENTS.md files committed and pushed
-- .claude/settings.json in place
+- All CLAUDE.md files added (root + 5 modules)
+- All init.sh files added (root + 5 modules)
+- All session-handoff.md files added (root + 5 modules)
 
 ## Blockers
-- session-handoff.md not yet added (this file)
 - Iteration 3 prompt not yet run
+- Tests not yet run — all counts still empty
 
 ## Next session starts here
 1. Read claude-progress.md
-2. Add session-handoff.md to each module
-3. Run iteration 3 prompt on FeedCache
-4. Record /context before and after
-5. Prepare Friday demo
+2. Run iteration 3 prompt on FeedCache
+3. Verify init.sh loads correctly — check /context before and after
+4. Run all module tests and update claude-progress.md counts
+5. Move to Lecture 07

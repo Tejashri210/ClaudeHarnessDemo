@@ -1,18 +1,24 @@
 ## Last session
-Date: 2026-05-28
-Work done: Added FeedCache/AGENTS.md with isolation rules and explicit self-read instruction.
+Date: 2026-06-04
+Work done: Lecture 06 complete — CLAUDE.md and init.sh added. session-handoff.md added.
+
+## Last commit
+<!-- hash + message from git log -1 -->
 
 ## Decisions made
 - Isolation rule placed at TOP in caps — lost in the middle rule from Lecture 04
 - LocalFeedImage vs FeedItem distinction called out explicitly
 - Test swizzling documented — do not remove warning added
+- CLAUDE.md single job — run init.sh only
 
 ## Verified
-- Nothing run yet — tests not executed this session
+- CLAUDE.md added
+- init.sh added
+- session-handoff.md added
 
 ## Blockers
 - Simulator destination not confirmed
-- claude-progress.md test counts empty — needs first test run
+- Tests not yet run — counts empty
 
 ## Next session starts here
 1. Read FeedCache/AGENTS.md
